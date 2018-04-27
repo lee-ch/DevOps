@@ -10,3 +10,11 @@ catch {
 
 $package = "%packagename%"
 choco install $package -y
+
+$is_installed = choco list -lo $package
+if ($is_installed) {
+    Write-Host "Package $package installed successfully" -ForegroundColor Green
+}
+else {
+    Write-Host "Package $package installation failed" -ForegroundColor Red
+}
