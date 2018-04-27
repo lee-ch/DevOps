@@ -8,5 +8,5 @@ catch {
     iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
 }
 
-$pyver = "%pythonversion%"
-choco install $pyver -y
+$package = "%packagename%"
+choco install $package -y
