@@ -1,5 +1,9 @@
 # Install Python
 # Check if chocolatey is installed
+param(
+    [string]$package
+)
+
 try {
     choco -v > $null
 }
@@ -8,7 +12,6 @@ catch {
     iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
 }
 
-$package = "%packagename%"
 choco install $package -y
 
 $is_installed = choco list -lo $package
