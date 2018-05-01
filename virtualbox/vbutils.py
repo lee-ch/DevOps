@@ -38,3 +38,22 @@ def human_readable_to_bytes(size, bytes_only=True):
 		return bytes
 	else:
 		return bytes, size+'B'
+
+def human_readable_to_megabyte(size, bytes_only=True):
+	if size[-1] == 'B':
+		size = size[:-1]
+	if size.isdigit():
+		bytes = int(size)
+	else:
+		bytes = size[:-1]
+		unit = size[-1].upper()
+		if bytes.isdigit():
+			bytes = int(bytes)
+			if unit == 'M':
+				bytes *= 1024
+			else:
+				bytes = 0
+		else:
+			bytes = 0
+	if bytes_only:
+		return bytes
