@@ -14,7 +14,7 @@ import datetime
 import platform
 
 from pprint import pprint
-from virtualbox.vbutils import human_readable_to_bytes, human_readable_to_megabyte
+from vboxmanager.vbutils import human_readable_to_bytes, human_readable_to_megabyte
 
 try:
 	import json
@@ -330,5 +330,11 @@ class ManageVM:
 		except Exception as e:
 			print('Failed to attach Hard Drvie {type} to {vm}'.format(type=type.upper(), vm=vm))
 
-	def exec_command(self, vm, user, password):
-		
+	def exec_command(self, vm_name, user, password, exe, *args):
+		args = list(args)
+		vbox = virtualbox.VirtualBox()
+		vm = vbox.find_machine(vm_name)
+		session = vm.create_session()
+		gs = session.console.guest.create_session(user, password)
+		proc, stdout, stderr = gs.execute(exe, args)
+		return stdout

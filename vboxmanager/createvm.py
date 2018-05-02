@@ -6,7 +6,7 @@ import re
 import datetime
 import logging
 
-import virtualbox.vbmanager
+import vboxmanager.vbmanager
 
 
 if __name__ == '__main__':
@@ -29,7 +29,7 @@ if __name__ == '__main__':
 		if '64' not in os_type:
 			os_type = os_type + '_64'
 
-	vm = virtualbox.vbmanager.ManageVM()
+	vm = vboxmanager.vbmanager.ManageVM()
 	for _, subdirs, files in os.walk(vm_path):
 		if vm_name not in subdirs:
 			# Create our VM if it doesn't exist
