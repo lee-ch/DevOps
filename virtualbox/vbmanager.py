@@ -50,7 +50,7 @@ except ImportError as e:
 class ManageVM:
 	def __init__(self, vm=''):
 		self.vm = vm
-		oVBoxMgr = VirtualBoxManager(None, None)
+		oVBoxMgr = vboxapi.VirtualBoxManager(None, None)
 		self.ctx = {
 			'global':		oVBoxMgr,
 			'vb':			oVBoxMgr.getVirtualBox(),

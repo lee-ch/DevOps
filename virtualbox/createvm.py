@@ -6,7 +6,7 @@ import re
 import datetime
 import logging
 
-import vbmanage
+import virtualbox.vbmanager
 
 
 if __name__ == '__main__':
@@ -26,9 +26,9 @@ if __name__ == '__main__':
 
 	if '64' in cpu_arch:
 		if '64' not in os_type:
-			os_type += os_type + '_64'
+			os_type = os_type + '_64'
 
-	vm = vbmanage.ManageVM()
+	vm = virtualbox.vbmanager.ManageVM()
 	vm.createVm(vm_name, os_type, proc_count)
 	vm.add_ram(vm_name, ram_amount)
 	vm.bridged_nic(vm_name, network_interface)
