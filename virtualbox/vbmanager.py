@@ -142,6 +142,9 @@ class ManageVM:
 		vbox.registerMachine(mach)
 		try:
 			subprocess.call(['VBoxManage', 'modifyvm', name, '--cpus', proc_count])
+		except Exception as e:
+			print('Failed to change CPU count')
+			print(e)
 		return self.ctx['global'].getArray(self.ctx['vb'], 'machines')
 
 	def removeVm(self, name):
