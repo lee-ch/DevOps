@@ -59,8 +59,6 @@ class ManageVM:
 			'type':			oVBoxMgr.type,
 		}
 
-		self.session = virtualbox.Session()
-
 	def getSession(self, mach):
 		session = self.ctx['global'].openMachineSession(mach, fPermitSharing=True)
 		return session
