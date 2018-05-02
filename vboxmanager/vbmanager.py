@@ -50,7 +50,7 @@ except ImportError as e:
 class ManageVM:
 	def __init__(self, vm=''):
 		self.vm = vm
-		oVBoxMgr = vboxapi.VirtualBoxManager(None, None)
+		oVBoxMgr = VirtualBoxManager(None, None)
 		self.ctx = {
 			'global':		oVBoxMgr,
 			'vb':			oVBoxMgr.getVirtualBox(),
@@ -329,3 +329,6 @@ class ManageVM:
 			print(success_msg)
 		except Exception as e:
 			print('Failed to attach Hard Drvie {type} to {vm}'.format(type=type.upper(), vm=vm))
+
+	def exec_command(self, vm, user, password):
+		

@@ -10,6 +10,7 @@ import virtualbox.vbmanager
 
 
 if __name__ == '__main__':
+	vm_path				= '%vmpath%'
 	vm_name 			= "%vmname%"
 	cpu_arch 			= "%cpuarch%"
 	os_type 			= "%ostype%"
@@ -29,9 +30,14 @@ if __name__ == '__main__':
 			os_type = os_type + '_64'
 
 	vm = virtualbox.vbmanager.ManageVM()
-	vm.createVm(vm_name, os_type, proc_count)
-	vm.add_ram(vm_name, ram_amount)
-	vm.bridged_nic(vm_name, network_interface)
-	vm.attach_controller(vm_name, controller_name, controller_type, controller_bus)
-	vm.attach_harddrive(vm_name, hard_drive_location, controller_name, hd_port, hd_device, hd_type)
-	vm.start_vm(vm_name)
+	for _, subdirs, files in os.walk(vm_path):
+		if vm_name not in subdirs:
+			# Create our VM if it doesn't exist
+			vm.createVm(vm_name, os_type, proc_count)
+			vm.add_ram(vm_name, ram_amount)
+			vm.bridged_nic(vm_name, network_interface)
+			vm.attach_controller(vm_name, controller_name, controller_type, controller_bus)
+			vm.attach_harddrive(vm_name, hard_drive_location, controller_name, hd_port, hd_device, hd_type)
+			vm.start_vm(vm_name)
+	else:
+		print('Virtual Machine {vm} exists'.format(vm_name))
