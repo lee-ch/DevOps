@@ -129,7 +129,7 @@ class ManageVM:
 		except Exception as e:
 			print(e)
 
-	def createVm(self, name, os):
+	def createVm(self, name, os, proc_count):
 		# We want to check if the os passed in is an actual os that's supported
 		try:
 			self.ctx['vb'].getGuestOSType(os)
@@ -140,6 +140,8 @@ class ManageVM:
 		mach = vbox.createMachine('', name, [], os, '')
 		mach.saveSettings()
 		vbox.registerMachine(mach)
+		try:
+			subprocess.call(['VBoxManage', 'modifyvm', name, '--cpus', proc_count])
 		return self.ctx['global'].getArray(self.ctx['vb'], 'machines')
 
 	def removeVm(self, name):
