@@ -14,7 +14,7 @@ import datetime
 import platform
 
 from pprint import pprint
-from vbutils import human_readable_to_bytes, human_readable_to_megabyte
+from virtualbox.vbutils import human_readable_to_bytes, human_readable_to_megabyte
 
 try:
 	import json
