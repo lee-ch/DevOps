@@ -317,8 +317,9 @@ class ManageVM:
 	def attach_iso(self, vm, storagectl, port, device, isotype, medium):
 		try:
 			subprocess.call(
-				['VBoxManage', vm,
-				 'storagectl', storagectl,
+				['VBoxManage',
+				 'storageattach', vm,
+				 storagectl,
 				 '--port', port,
 				 '--device', device,
 				 '--type', isotype,
