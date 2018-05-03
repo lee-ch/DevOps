@@ -319,7 +319,7 @@ class ManageVM:
 			subprocess.call(
 				['VBoxManage',
 				 'storageattach', vm,
-				 storagectl,
+				 '--storagectl', storagectl,
 				 '--port', port,
 				 '--device', device,
 				 '--type', isotype,
