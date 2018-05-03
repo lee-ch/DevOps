@@ -314,15 +314,17 @@ class ManageVM:
 			print('Failed to controller {ctrlr}'.format(ctrlr=ctrlname))
 			print(e)
 
-	def attach_iso(self, vm, storagectl, port, device, hdtype, medium):
+	def attach_iso(self, vm, storagectl, port, device, isotype, medium):
 		try:
 			subprocess.call(
 				['VBoxManage', vm,
 				 'storagectl', storagectl,
 				 '--port', port,
 				 '--device', device,
-				 '--type', hdtype,
+				 '--type', isotype,
 				 '--medium', medium])
+		except Exception as e:
+			print(e)
 
 	def attach_harddrive(self, vm, location, ctrlname, port='0', device='0', type='hdd'):
 		success_msg = 'Attached Hard Drive {type} to {vm}'.format(type=type.upper(), vm=vm)
