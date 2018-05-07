@@ -314,6 +314,9 @@ class ManageVM:
 			print('Failed to controller {ctrlr}'.format(ctrlr=ctrlname))
 			print(e)
 
+	def create_ide_controller(self, vm, name, type):
+		subprocess.call(['VBoxManage', 'storagectl', vm, '--name', 'IDE', '--add', 'ide'])
+
 	def attach_iso(self, vm, storagectl, port, device, isotype, medium):
 		try:
 			subprocess.call(
