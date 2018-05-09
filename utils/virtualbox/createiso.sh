@@ -10,6 +10,7 @@ netmask="%system.netmask%"
 broadcast="%system.broadcast%"
 network="%system.network%"
 gateway="%system.gateway%"
+nameserver="%system.nameserver%"
 
 # Download function
 function download() {
@@ -150,6 +151,7 @@ if [ $enable_ssh ]; then
 		late_command=$late_command"in-target sed -i '/netmask $netmask/a broadcast $broadcast' /etc/network/interfaces; "
 		late_command=$late_command"in-target sed -i '/broadcast $broadcast/a network $network' /etc/network/interfaces; "
 		late_command=$late_command"in-target sed -i '/network $network/a gateway $gateway' /etc/network/interfaces; "
+		late_command=$late_command"in-target sed -i 's/.*/nameserver $nameserver/g /etc/resolv.conf; '
 	fi
 	# Configure user to run sudo without password
 	late_command=$late_command"in-target sed -i '/\# User privilege specification/a $username	ALL=(ALL) NOPASSWD: ALL' /etc/sudoers; "
