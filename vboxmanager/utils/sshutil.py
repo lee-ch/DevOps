@@ -18,19 +18,16 @@ class OpenSSH:
 		self.ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
 		self.ssh.connect(hostname, username=username, password=password, look_for_keys=False)
 
-	def has_ssh_connection(self, host, port=22, timeout=60, interval=5):
+	def has_ssh_connection(self, host, port=22, timeout=600):
 		'''
 		Checks if an SSH connection can be established
 		'''
-		has_connection = False
-		while not has_connection:
-			time.sleep(interval)
-			try:
-				socket.setdefaulttimeout(timeout)
-				socket.socket(socket.AF_INET, socket.SOCK_STREAM).connect((host, port))
-				has_connection = True
-			except:
-				has_connection = False
+		try:
+			socket.setdefaulttimeout(timeout)
+			socket.socket(socket.AF_INET, socket.SOCK_STREAM).connect((host, port))
+			has_connection = True
+		except:
+			has_connection = False
 		return has_connection
 
 	def send_command(self, command):
@@ -46,4 +43,5 @@ class OpenSSH:
 					while _prev_data:
 						_prev_data = stdout.channel.recv(1024)
 						data += _prev_data
+
 					print(str(data))
