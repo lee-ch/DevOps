@@ -8,7 +8,7 @@ import time
 
 
 class OpenSSH:
-	def __init__(self, hostname, username, password):
+	def __init__(self, hostname, username, password, timeout=None):
 		self.hostname = hostname
 		self.username = username
 		self.password = password
@@ -16,7 +16,7 @@ class OpenSSH:
 		print('Establishing SSH connection {0}...'.format(hostname))
 		self.ssh = paramiko.SSHClient()
 		self.ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-		self.ssh.connect(hostname, username=username, password=password, look_for_keys=False)
+		self.ssh.connect(self.hostname, username=self.username, password=self.password, look_for_keys=False, timeout=timeout)
 
 	def has_ssh_connection(self, host, port=22, timeout=600):
 		'''
