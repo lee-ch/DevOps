@@ -108,6 +108,15 @@ class ManageVM:
 				return True
 		return False
 
+	def is_running(self, name):
+		vms = self.getMachines()
+		for vm in vms:
+			if name in vm.name:
+				if vm.state == 5:
+					return True
+				else:
+					return False
+
 	def argsToVm(self, args):
 		uuid = args[1]
 		vm = self.vmById(uuid)
