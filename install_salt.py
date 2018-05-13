@@ -38,7 +38,7 @@ def run_command(command):
 	if has_ssh_connection(ipaddr):
 		ssh = OpenSSH(hostname=ipaddr, username=username, password=password)
 		try:
-			socket.setdefaulttimeout(timeout)
+			socket.setdefaulttimeout(120)
 			socket.socket(socket.AF_INET, socket.SOCK_STREAM).connect((host, port))
 			ssh.send_command(command)
 		except:
@@ -61,7 +61,7 @@ if __name__ == '__main__':
 		'sudo /etc/init.d/salt-minion restart',
 	]
 
-	timeout = 480
+	timeout = 540
 	command_wait = 10
 
 	time.sleep(timeout)

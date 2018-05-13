@@ -80,6 +80,34 @@ class ManageVM:
 		else:
 			return []
 
+	def vm_exists(self, name):
+		vms = self.getMachines()
+		exists = False
+		for vm in vms:
+			if name in vm.name:
+				exists = True
+			else:
+				exists = False
+		return exists
+
+	def has_hard_drive(self, name):
+		mach = self.vmById(name)
+		attachments = self.ctx['global'].getArray(mach, 'mediumAttachments')
+		for a in attachments:
+			medium = a.medium
+			if a.type == self.ctx['global'].constants.DeviceType_HardDisk:
+				return True
+		return False
+
+	def has_dvd_drive(self, name):
+		mach = self.vmById(name)
+		attachments = self.ctx['global'].getArray(mach, 'mediumAttachments')
+		for a in attachments:
+			medium = a.medium
+			if a.type == self.ctx['global'].constants.DeviceType_DVD:
+				return True
+		return False
+
 	def argsToVm(self, args):
 		uuid = args[1]
 		vm = self.vmById(uuid)
