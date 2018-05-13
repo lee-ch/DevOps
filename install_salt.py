@@ -40,8 +40,6 @@ password = "%reverse.dep.VirtualBox_BuildVirtualMachine_LinuxMinion.password%"
 def run_command(command, host, port, timeout):
 	ssh = OpenSSH(hostname=ipaddr, username=username, password=password, timeout=timeout)
 	try:
-		socket.setdefaulttimeout(120)
-		socket.socket(socket.AF_INET, socket.SOCK_STREAM).connect((host, port))
 		ssh.send_command(command)
 	except:
 		print('Failed to execute command: ' + command)
