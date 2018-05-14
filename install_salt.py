@@ -62,5 +62,5 @@ if __name__ == '__main__':
 	]
 
 	for command in commands:
-		run_command(command=command, host=ipaddr, port=22, timeout=900, interval=10)
+		run_command(command=command, host=ipaddr, port=22, timeout=600, interval=1)
 		time.sleep(10)

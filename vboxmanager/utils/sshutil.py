@@ -24,6 +24,7 @@ class OpenSSH:
 			time.sleep(retry_interval)
 			try:
 				self.ssh.connect(self.host, int(self.port), self.username, self.password, look_for_keys=False)
+				return True
 			except paramiko.ssh_exception.SSHException as e:
 				if e.message == 'Error reading SSH protocol banner':
 					print(e)
@@ -32,7 +33,7 @@ class OpenSSH:
 			except paramiko.ssh_exception.NoValidConnectionsError as e:
 				print('SSH transport is unavailable')
 
-	def send_command(self, command, timeout=900, retry_interval=10):
+	def send_command(self, command, timeout=300, retry_interval=10):
 		'''
 		Sends command if connection was made successfully
 		'''
