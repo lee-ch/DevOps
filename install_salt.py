@@ -36,7 +36,7 @@ def run_command(command, host, port, timeout):
 if __name__ == '__main__':
 	# We need to wait until the VM is up and running
 	# (will automate this process at some point but for now, this works)
-	timeout = 900
+	timeout = float(900)
 
 	# Creates the UUID to be used to accept the Minions key on the Master
 	NAMESPACE_STR = 'linuxminion'
@@ -59,13 +59,14 @@ if __name__ == '__main__':
 		r'sudo apt-get install curl -y',
 		r'sudo curl -L https://bootstrap.saltstack.com -o install_salt.sh',
 		r'sudo sh install_salt.sh -A {}'.format(salt_master_ip),
-		r'sudo sed -Ei \'s/#master\: salt/master\: {}/\' /etc/salt/minion'.format(salt_master_ip),
+		r'sudo sed -Ei "s/^#master\: salt/master\: {}/" /etc/salt/minion'.format(salt_master_ip),
 		r'sudo sed -Ei "s/^#master_finger: .*/master_finger: \'{pub_key}\'/" /etc/salt/minion'.format(pub_key=master_key),
 		r'sudo rm -f /etc/salt/minion_id',
 		r'sudo sed -i "s/^#grains\:/grains\:\n  uuid\: \'{uuid}\'/" /etc/salt/minion'.format(uuid=MINION_UUID),
-	    r'sudo sed -i "/uuid\: \'{uuid}\'/a autosign_grains\:\n  - uuid" /etc/salt/minion'.format(uuid=MINION_UUID),
-	    r'sudo sed -i "s/^#id\:/id\: {}/" /etc/salt/minion'.format(hostname),
-	    r'sudo /etc/init.d/salt-minion restart'
+		r'sudo sed -Ei "s/^#autosign_grains\:/autosign_grains\:/" /etc/salt/minion',
+		r'sudo sed -Ei "s/^#(.*\- uuid)/\1/" /etc/salt/minion',
+		r'sudo sed -i "s/^#id\:/id\: {}/" /etc/salt/minion'.format(hostname),
+		r'sudo /etc/init.d/salt-minion restart'
 	]
 
 	for command in commands:
