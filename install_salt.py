@@ -25,19 +25,11 @@ from utils.salt.keys import SaltMasterKey
 
 
 
-def run_command(command, host, port, timeout):
-	ssh = OpenSSH(hostname=ipaddr, username=username, password=password, timeout=timeout)
-	try:
-		ssh.send_command(command)
-	except:
-		print('Failed to execute command: ' + command)
-
+def run_command(command, host, port, timeout, interval):
+	ssh = OpenSSH(host=ipaddr, port=port, username=username, password=password)
+	ssh.send_command(command, timeout, interval)
 
 if __name__ == '__main__':
-	# We need to wait until the VM is up and running
-	# (will automate this process at some point but for now, this works)
-	timeout = float(900)
-
 	# Creates the UUID to be used to accept the Minions key on the Master
 	NAMESPACE_STR = 'linuxminion'
 	MINION_UUID = str(uuid.uuid3(uuid.NAMESPACE_DNS, NAMESPACE_STR))
@@ -70,5 +62,5 @@ if __name__ == '__main__':
 	]
 
 	for command in commands:
-		run_command(command, ipaddr, 22, timeout)
+		run_command(command=command, host=ipaddr, port=22, timeout=900, interval=10)
 		time.sleep(10)
